@@ -1,6 +1,10 @@
 package oncall.controller;
 
+import java.util.List;
+import oncall.domain.CombinedRoster;
 import oncall.domain.MonthAndDayOfWeek;
+import oncall.domain.Roster;
+import oncall.domain.Worker;
 import oncall.service.CustomService;
 import oncall.view.InputView;
 import oncall.view.OutputView;
@@ -17,13 +21,23 @@ public class CustomController extends ExceptionLoopController{
     }
 
     public void run() {
-        //월, 요일 생성
-        //평일 근무, 주말근무 생성
         MonthAndDayOfWeek monthAndDayOfWeek = repeatUntilValid(this::getMonthAndDayOfWeek);
+        CombinedRoster combinedRoster = repeatUntilValid(this::getRoster);
+
+        service.makeMonthlyRoster(monthAndDayOfWeek, combinedRoster);
     }
 
     private MonthAndDayOfWeek getMonthAndDayOfWeek() {
         output.printGetMonthDayOfWeek();
         return input.getMonthDayOfWeek();
+    }
+
+    private CombinedRoster getRoster() {
+        output.printGetWeekdayRoster();
+        Roster weekdayRoster = input.getRoster();
+        output.printGetWeekendRoster();
+        Roster weekendRoster = input.getRoster();
+
+        return new CombinedRoster(weekdayRoster, weekendRoster);
     }
 }

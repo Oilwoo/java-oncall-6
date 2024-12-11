@@ -4,10 +4,15 @@ import camp.nextstep.edu.missionutils.Console;
 import java.time.DateTimeException;
 import java.time.DayOfWeek;
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import oncall.domain.MonthAndDayOfWeek;
+import oncall.domain.Roster;
+import oncall.domain.Worker;
 import oncall.exception.IllegalInputException;
 
 public class InputView {
@@ -47,6 +52,17 @@ public class InputView {
         } catch (DateTimeException | NullPointerException e) {
             throw new IllegalInputException();
         }
+    }
+
+    public Roster getRoster() {
+        String input = Console.readLine();
+        String[] names = input.split(DELIMITER);
+
+        List<Worker> workers = new ArrayList<>();
+        for(String name : names) {
+            workers.add(new Worker(name));
+        }
+        return new Roster(workers);
     }
 
 }
