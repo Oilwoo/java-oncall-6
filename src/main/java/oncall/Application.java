@@ -12,5 +12,6 @@ public class Application {
         CustomService customService = new CustomService();
 
         CustomController controller = new CustomController(inputView, outputView, customService);
+        controller.run();
     }
 }
