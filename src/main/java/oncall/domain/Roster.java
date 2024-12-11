@@ -1,5 +1,6 @@
 package oncall.domain;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,5 +36,17 @@ public class Roster {
 
     public List<Worker> getWorkers() {
         return workers;
+    }
+
+    public String getWorkerNameByIndex(int i) {
+        return workers.get(i).getName();
+    }
+
+    public void swapRoster(int i) {
+        Collections.swap(workers, i, i + 1);
+    }
+
+    public int getRosterSize() {
+        return workers.size();
     }
 }

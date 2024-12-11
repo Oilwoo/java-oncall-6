@@ -3,6 +3,7 @@ package oncall.controller;
 import java.util.List;
 import oncall.domain.CombinedRoster;
 import oncall.domain.MonthAndDayOfWeek;
+import oncall.domain.MonthlyRoster;
 import oncall.domain.Roster;
 import oncall.domain.Worker;
 import oncall.service.CustomService;
@@ -23,8 +24,8 @@ public class CustomController extends ExceptionLoopController{
     public void run() {
         MonthAndDayOfWeek monthAndDayOfWeek = repeatUntilValid(this::getMonthAndDayOfWeek);
         CombinedRoster combinedRoster = repeatUntilValid(this::getRoster);
-
-        service.makeMonthlyRoster(monthAndDayOfWeek, combinedRoster);
+        List<MonthlyRoster> monthlyRoster = service.makeMonthlyRoster(monthAndDayOfWeek, combinedRoster);
+        output.printMonthlyRoster(monthlyRoster);
     }
 
     private MonthAndDayOfWeek getMonthAndDayOfWeek() {
